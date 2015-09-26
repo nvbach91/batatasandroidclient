@@ -1,4 +1,4 @@
-package com.dev.batatasandroidclient.view;
+package com.dev.batatasandroidclient.adapters;
 
 /**
  * Created by dev on 26.9.2015.
@@ -16,19 +16,20 @@ import android.widget.TextView;
 import com.dev.batatasandroidclient.R;
 import com.dev.batatasandroidclient.constants.C;
 import com.dev.batatasandroidclient.data.Product;
+import com.dev.batatasandroidclient.listeners.OrderButtonOnClickListener;
 import com.dev.batatasandroidclient.net.ImageLoader;
 
 import java.util.List;
 
 
-public class ProductsLazyAdapter extends BaseAdapter {
+public class ProductsAdapter extends BaseAdapter {
 
-    private Activity activity;
-    private List<Product> products;
+    private final Activity activity;
+    private final List<Product> products;
     private static LayoutInflater inflater = null;
-    public ImageLoader imageLoader;
+    public final ImageLoader imageLoader;
 
-    public ProductsLazyAdapter(Activity a, List<Product> p) {
+    public ProductsAdapter(Activity a, List<Product> p) {
         activity = a;
         products = p;
         inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -60,10 +61,17 @@ public class ProductsLazyAdapter extends BaseAdapter {
         TextView text = (TextView) view.findViewById(R.id.name);
         TextView price = (TextView) view.findViewById(R.id.price);
         ImageView image = (ImageView) view.findViewById(R.id.image);
+        ImageView orderButton = (ImageView) view.findViewById(R.id.order_button);
 
         text.setText(product.getName_en());
         price.setText(product.getPrice());
         imageLoader.DisplayImage(C.BASEURL + C.IMGPATH + product.getImageName(), image);
+
+        orderButton.setOnClickListener(new OrderButtonOnClickListener(product));
         return view;
+    }
+
+    public ImageLoader getImageLoader() {
+        return imageLoader;
     }
 }

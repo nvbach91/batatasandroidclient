@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">BatatasAndroidClient</string>
-
-    <string name="hello_world">Hello world!</string>
+    <string name="app_name">Batatas Delivery</string>
     <string name="action_settings">Settings</string>
+    <string name="image_view_desc">Product Image</string>
+    <string name="clear_cache">Clear Cache</string>
+    <string name="company_logo_desc">Company Logo</string>
 </resources>

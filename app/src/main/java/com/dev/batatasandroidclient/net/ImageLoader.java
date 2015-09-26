@@ -42,7 +42,7 @@ public class ImageLoader extends Activity {
         executorService = Executors.newFixedThreadPool(5);
     }
 
-    final int stub_id = R.mipmap.ic_launcher;
+    final int stub_id = R.drawable.logo;
 
     public void DisplayImage(String url, ImageView imageView) {
         imageViews.put(imageView, url);
@@ -98,8 +98,8 @@ public class ImageLoader extends Activity {
             o.inJustDecodeBounds = true;
             BitmapFactory.decodeStream(new FileInputStream(f), null, o);
 
-            //Find the correct scale value. It should be the power of 2.
-            final int REQUIRED_SIZE = 70;
+            //Find the correct scale value in px. It should be the power of 2.
+            final int REQUIRED_SIZE = 512;
             int width_tmp = o.outWidth, height_tmp = o.outHeight;
             int scale = 1;
             while (true) {
@@ -175,6 +175,7 @@ public class ImageLoader extends Activity {
                 photoToLoad.imageView.setImageBitmap(bitmap);
             else
                 photoToLoad.imageView.setImageResource(stub_id);
+
         }
     }
 

@@ -5,10 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,7 +15,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.dev.batatasandroidclient.constants.C;
 import com.dev.batatasandroidclient.data.Product;
-import com.dev.batatasandroidclient.view.ProductsLazyAdapter;
+import com.dev.batatasandroidclient.listeners.ProductOnClickListener;
+import com.dev.batatasandroidclient.adapters.ProductsAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,10 +26,12 @@ import java.util.List;
 
 public class MainActivity extends Activity {
     private ListView mainList;
+    private ProductsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         RequestQueue queue = Volley.newRequestQueue(this);
         mainList = (ListView) findViewById(R.id.mainListView);
@@ -56,6 +56,7 @@ public class MainActivity extends Activity {
         try {
             JSONArray productsArray = new JSONObject(response).getJSONArray("products");
             List<Product> products = new ArrayList<>();
+            //products.add(new Product("logo", 0, "logo"));
             for (int i = 0; i < productsArray.length(); i++) {
                 JSONObject t = productsArray.getJSONObject(i);
 
@@ -65,18 +66,9 @@ public class MainActivity extends Activity {
                 Product product = new Product(name_en, price, imageName);
                 products.add(product);
             }
-
-            ProductsLazyAdapter adapter = new ProductsLazyAdapter(this, products);
+            adapter = new ProductsAdapter(this, products);
             mainList.setAdapter(adapter);
-            mainList.setOnItemClickListener(
-                    new AdapterView.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                            String price = ((Product) parent.getItemAtPosition(position)).getPrice();
-                            Toast.makeText(MainActivity.this, price, Toast.LENGTH_SHORT).show();
-                        }
-                    }
-            );
+            mainList.setOnItemClickListener(new ProductOnClickListener(MainActivity.this));
         } catch (Exception e) {
         }
     }
@@ -90,17 +82,17 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_settings:
+                return true;
+            case R.id.clear_cache:
+                adapter.getImageLoader().clearCache();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
 
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -33,7 +33,7 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
 
         name.setText(product.getName_en());
         price.setText(product.getPrice());
-        image.setImageBitmap(product.getImageBitmap());
+        //image.setImageBitmap(product.getImageBitmap());
         return customView;
     }
 
