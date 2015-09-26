@@ -5,6 +5,7 @@ package com.dev.batatasandroidclient.constants;
  * Contains CONSTANTS
  */
 public final class C {
+    public static final String LABEL_ALLERGENS = "Allergens: ";
     public static final String CURRENCY = "Kč";
     public static final String TAG = "NVB";
     public static final String BASEURL = "https://www.batatas.cz";

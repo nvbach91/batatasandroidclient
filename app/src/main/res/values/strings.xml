@@ -4,4 +4,5 @@
     <string name="image_view_desc">Product Image</string>
     <string name="clear_cache">Clear Cache</string>
     <string name="company_logo_desc">Company Logo</string>
+    <string name="product_image_desc">Product Image</string>
 </resources>

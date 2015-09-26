@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.dev.batatasandroidclient.R;
 import com.dev.batatasandroidclient.constants.C;
 import com.dev.batatasandroidclient.data.Product;
-import com.dev.batatasandroidclient.listeners.OrderButtonOnClickListener;
+import com.dev.batatasandroidclient.listeners.AddToCartOnClickListener;
 import com.dev.batatasandroidclient.net.ImageLoader;
 
 import java.util.List;
@@ -58,16 +58,17 @@ public class ProductsAdapter extends BaseAdapter {
             view = inflater.inflate(R.layout.listview_row, null);
 
         Product product = products.get(position);
+
         TextView text = (TextView) view.findViewById(R.id.name);
         TextView price = (TextView) view.findViewById(R.id.price);
         ImageView image = (ImageView) view.findViewById(R.id.image);
-        ImageView orderButton = (ImageView) view.findViewById(R.id.order_button);
+        ImageView addToCart = (ImageView) view.findViewById(R.id.add_to_cart);
 
         text.setText(product.getName_en());
         price.setText(product.getPrice());
         imageLoader.DisplayImage(C.BASEURL + C.IMGPATH + product.getImageName(), image);
+        addToCart.setOnClickListener(new AddToCartOnClickListener(product));
 
-        orderButton.setOnClickListener(new OrderButtonOnClickListener(product));
         return view;
     }
 

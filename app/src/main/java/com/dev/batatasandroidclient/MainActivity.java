@@ -31,17 +31,19 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-        RequestQueue queue = Volley.newRequestQueue(this);
         mainList = (ListView) findViewById(R.id.mainListView);
+        requestData();
+    }
+
+    private void requestData() {
+        RequestQueue queue = Volley.newRequestQueue(this);
         String url = C.BASEURL + C.FOODPATH;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         populateListView2(response);
-                        //populateListView(response);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -56,14 +58,15 @@ public class MainActivity extends Activity {
         try {
             JSONArray productsArray = new JSONObject(response).getJSONArray("products");
             List<Product> products = new ArrayList<>();
-            //products.add(new Product("logo", 0, "logo"));
             for (int i = 0; i < productsArray.length(); i++) {
                 JSONObject t = productsArray.getJSONObject(i);
 
                 String name_en = t.getString("name_en");
                 Integer price = t.getInt("price");
                 String imageName = t.getString("images");
-                Product product = new Product(name_en, price, imageName);
+                String description = t.getString("description_en");
+                String allergens = t.getString("alergens");
+                Product product = new Product(name_en, price, imageName, description, allergens);
                 products.add(product);
             }
             adapter = new ProductsAdapter(this, products);

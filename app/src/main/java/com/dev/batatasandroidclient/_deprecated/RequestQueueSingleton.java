@@ -1,4 +1,4 @@
-package com.dev.batatasandroidclient.net;
+package com.dev.batatasandroidclient._deprecated;
 
 import android.content.Context;
 import android.graphics.Bitmap;
