@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dev.batatasandroidclient.R;
+import com.dev.batatasandroidclient.constants.C;
 import com.dev.batatasandroidclient.data.Product;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class ProductsAdapter extends ArrayAdapter<Product> {
         TextView price = (TextView) customView.findViewById(R.id.price);
         ImageView image = (ImageView) customView.findViewById(R.id.image);
 
-        name.setText(product.getName_en());
+        name.setText(product.getName(C.LANGUAGE));
         price.setText(product.getPrice());
         //image.setImageBitmap(product.getImageBitmap());
         return customView;

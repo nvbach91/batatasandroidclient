@@ -1,6 +1,7 @@
 package com.dev.batatasandroidclient.adapters;
 
 /**
+ * @author Nguyen Viet Bach
  * Created by dev on 26.9.2015.
  */
 
@@ -64,10 +65,10 @@ public class ProductsAdapter extends BaseAdapter {
         ImageView image = (ImageView) view.findViewById(R.id.image);
         ImageView addToCart = (ImageView) view.findViewById(R.id.add_to_cart);
 
-        text.setText(product.getName_en());
+        text.setText(product.getName(C.LANGUAGE));
         price.setText(product.getPrice());
         imageLoader.DisplayImage(C.BASEURL + C.IMGPATH + product.getImageName(), image);
-        addToCart.setOnClickListener(new AddToCartOnClickListener(product));
+        addToCart.setOnClickListener(new AddToCartOnClickListener(activity.getApplicationContext(), product));
 
         return view;
     }

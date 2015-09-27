@@ -2,7 +2,25 @@
     <string name="app_name">Batatas Delivery</string>
     <string name="action_settings">Settings</string>
     <string name="image_view_desc">Product Image</string>
-    <string name="clear_cache">Clear Cache</string>
+
+    <string name="reset_settings">Reset Settings</string>
+    <string name="reset_settings_cs">Resetovat nastavení</string>
+
     <string name="company_logo_desc">Company Logo</string>
     <string name="product_image_desc">Product Image</string>
+    <string name="batatas_url">www.batatas.cz</string>
+
+    <string name="change_language">Čeština</string>
+    <string name="change_language_cs">English</string>
+
+    <string name="english">English</string>
+    <string name="czech">Čeština</string>
+
+    <string name="choose_language_label">Please choose your language</string>
+
+    <string name="czech_language_desc">Czech Language</string>
+    <string name="english_language_desc">English Language</string>
+
+    <string name="reload">Reload</string>
+    <string name="reload_cs">Znovu načíst</string>
 </resources>

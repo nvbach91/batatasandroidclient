@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical|center_horizontal"
+    android:background="#eeeeee">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/choose_language_label"
+        android:id="@+id/choose_language"
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingTop="40dp"
+        android:paddingBottom="40dp" />
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:id="@+id/english_language"
+        android:src="@drawable/english_flag"
+        android:contentDescription="@string/english_language_desc"
+        android:layout_below="@+id/choose_language"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="200dp"
+        android:id="@+id/czech_language"
+        android:src="@drawable/czech_flag"
+        android:contentDescription="@string/czech_language_desc"
+        android:layout_below="@+id/english_language"
+        android:layout_alignStart="@+id/english_language" />
+
+</RelativeLayout>

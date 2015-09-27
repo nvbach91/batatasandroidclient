@@ -21,7 +21,11 @@
         </activity>
         <activity
             android:screenOrientation="portrait"
-            android:name="._deprecated.DetailsActivity">
+            android:name=".view.SplashScreen">
+        </activity>
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".view.LanguageChooser">
         </activity>
     </application>
 

@@ -3,15 +3,14 @@
     <!--item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" android:showAsAction="never" /-->
 
-    <item android:id="@+id/reload" android:title="@string/reload"
+    <item android:id="@+id/reload" android:title="@string/reload_cs"
         android:orderInCategory="100" android:showAsAction="never" />
 
-    <item android:id="@+id/reset_settings" android:title="@string/reset_settings"
+    <item android:id="@+id/reset_settings" android:title="@string/reset_settings_cs"
         android:orderInCategory="100" android:showAsAction="never" />
 
     <item android:id="@+id/change_language"
-        android:icon="@drawable/czech_flag"
-        android:title="@string/czech"
+        android:icon="@drawable/english_flag"
+        android:title="@string/english"
         android:showAsAction="ifRoom" />
-
 </menu>

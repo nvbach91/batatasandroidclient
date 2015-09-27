@@ -1,6 +1,9 @@
 package com.dev.batatasandroidclient;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -17,6 +20,8 @@ import com.dev.batatasandroidclient.constants.C;
 import com.dev.batatasandroidclient.data.Product;
 import com.dev.batatasandroidclient.listeners.ProductOnClickListener;
 import com.dev.batatasandroidclient.adapters.ProductsAdapter;
+import com.dev.batatasandroidclient.view.LanguageChooser;
+import com.dev.batatasandroidclient.view.SplashScreen;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -24,26 +29,59 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Nguyen Viet Bach
+ *         Created by dev on 27.9.2015.
+ */
+
 public class MainActivity extends Activity {
     private ListView mainList;
     private ProductsAdapter adapter;
+    private RequestQueue queue;
+    private String savedResponse;
+    private SharedPreferences sp;
+    private Menu theMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         mainList = (ListView) findViewById(R.id.mainListView);
-        requestData();
+        queue = Volley.newRequestQueue(this);
+
+        sp = getSharedPreferences("config", Context.MODE_PRIVATE);
+
+        if (sp.getString("language", "") == "") {
+            chooseLanguage();
+        } else {
+            C.LANGUAGE = sp.getString("language", "");
+        }
+
+        splash();
+
+        init();
     }
 
-    private void requestData() {
-        RequestQueue queue = Volley.newRequestQueue(this);
+    private void chooseLanguage() {
+        Intent languageChooserIntent = new Intent(MainActivity.this, LanguageChooser.class);
+        startActivityForResult(languageChooserIntent, C.LANGUAGECHOOSER_ACTIVITY_CODE);
+    }
+
+    private void splash() {
+        Intent splashIntent = new Intent(MainActivity.this, SplashScreen.class);
+        startActivityForResult(splashIntent, C.SPLASH_ACTIVITY_CODE);
+    }
+
+    private void init() {
         String url = C.BASEURL + C.FOODPATH;
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        populateListView2(response);
+                        savedResponse = response;
+                        populateListView(response);
+                        finishActivity(C.SPLASH_ACTIVITY_CODE);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -54,32 +92,37 @@ public class MainActivity extends Activity {
         queue.add(stringRequest);
     }
 
-    private void populateListView2(String response) {
+    private void populateListView(String response) {
+        List<Product> products = getProducts(response);
+        adapter = new ProductsAdapter(this, products);
+        mainList.setAdapter(adapter);
+        mainList.setOnItemClickListener(new ProductOnClickListener(MainActivity.this));
+    }
+
+    private List<Product> getProducts(String response) {
+        List<Product> products = new ArrayList<>();
         try {
             JSONArray productsArray = new JSONObject(response).getJSONArray("products");
-            List<Product> products = new ArrayList<>();
             for (int i = 0; i < productsArray.length(); i++) {
-                JSONObject t = productsArray.getJSONObject(i);
-
-                String name_en = t.getString("name_en");
-                Integer price = t.getInt("price");
-                String imageName = t.getString("images");
-                String description = t.getString("description_en");
-                String allergens = t.getString("alergens");
-                Product product = new Product(name_en, price, imageName, description, allergens);
+                JSONObject p = productsArray.getJSONObject(i);
+                Product product = new Product(p);
                 products.add(product);
             }
-            adapter = new ProductsAdapter(this, products);
-            mainList.setAdapter(adapter);
-            mainList.setOnItemClickListener(new ProductOnClickListener(MainActivity.this));
         } catch (Exception e) {
+            Log.i(C.TAG, e.getMessage());
         }
+        return products;
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        menu.clear();
+        theMenu = menu;
+        if (C.LANGUAGE == "cs") {
+            getMenuInflater().inflate(R.menu.menu_main_cs, menu);
+        } else {
+            getMenuInflater().inflate(R.menu.menu_main, menu);
+        }
         return true;
     }
 
@@ -87,10 +130,27 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
-            case R.id.action_settings:
-                return true;
-            case R.id.clear_cache:
+            case R.id.reload:
                 adapter.getImageLoader().clearCache();
+                init();
+                return true;
+            case R.id.reset_settings:
+                getSharedPreferences("config", 0).edit().clear().commit();
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+                return true;
+            case R.id.change_language:
+                if (C.LANGUAGE == "cs") {
+                    C.LANGUAGE = "en";
+                    sp.edit().putString("language", "en").commit();
+                    onCreateOptionsMenu(theMenu);
+                } else {
+                    C.LANGUAGE = "cs";
+                    sp.edit().putString("language", "cs").commit();
+                    onCreateOptionsMenu(theMenu);
+                }
+                populateListView(savedResponse);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

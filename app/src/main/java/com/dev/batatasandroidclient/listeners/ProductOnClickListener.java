@@ -18,21 +18,25 @@ import com.dev.batatasandroidclient.view.DetailsDialog;
 import java.io.File;
 
 /**
- * Created by dev on 26.9.2015.
+ * @author Nguyen Viet Bach
+ *         Created by dev on 27.9.2015.
  */
 public class ProductOnClickListener implements AdapterView.OnItemClickListener {
     private Context context;
-    public ProductOnClickListener(Context context){
+
+    public ProductOnClickListener(Context context) {
         this.context = context;
     }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Product product = (Product) parent.getItemAtPosition(position);
-        DetailsDialog dialog = new DetailsDialog(context);
+        DetailsDialog dialog = new DetailsDialog(context, product);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_details);
 
         ImageView image = (ImageView) dialog.findViewById(R.id.image);
+        TextView name = (TextView) dialog.findViewById(R.id.name);
         TextView description = (TextView) dialog.findViewById(R.id.description);
         TextView allergens = (TextView) dialog.findViewById(R.id.allergens);
         TextView price = (TextView) dialog.findViewById(R.id.price);
@@ -42,13 +46,13 @@ public class ProductOnClickListener implements AdapterView.OnItemClickListener {
         Bitmap bitmap = Utils.decodeFile(f);
         image.setImageBitmap(bitmap);
 
-        description.setText(product.getName_en() + "\n\n" + product.getDescription());
-        allergens.setText(C.LABEL_ALLERGENS + " " + product.getAllergens());
+        name.setText(product.getName(C.LANGUAGE));
+        description.setText(product.getDescription(C.LANGUAGE));
+        allergens.setText(product.getAllergens());
         price.setText(product.getPrice());
 
         dialog.show();
     }
-
 
 
 }
