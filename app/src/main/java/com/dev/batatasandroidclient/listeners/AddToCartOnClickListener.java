@@ -1,9 +1,12 @@
 package com.dev.batatasandroidclient.listeners;
 
+import android.app.Activity;
 import android.content.Context;
-import android.util.Log;
+import android.support.v4.app.Fragment;
 import android.view.View;
 
+import com.dev.batatasandroidclient.FragmentCommunicator;
+import com.dev.batatasandroidclient.R;
 import com.dev.batatasandroidclient.constants.C;
 import com.dev.batatasandroidclient.data.Product;
 import com.dev.batatasandroidclient.view.Toaster;
@@ -14,15 +17,17 @@ import com.dev.batatasandroidclient.view.Toaster;
  */
 public class AddToCartOnClickListener implements View.OnClickListener {
     private final Product product;
-    private final Context context;
+    private final Activity activity;
 
-    public AddToCartOnClickListener(Context context, Product product) {
+    public AddToCartOnClickListener(Activity activity, Product product) {
         this.product = product;
-        this.context = context;
+        this.activity = activity;
     }
 
     @Override
     public void onClick(View v) {
-        Toaster.show(context, product.getName(C.LANGUAGE) + C.getLabelAddedToCart(C.LANGUAGE));
+        Toaster.show(activity, product.getName(C.LANG) + C.getLabelAddedToCart(C.LANG));
+        FragmentCommunicator fc = (FragmentCommunicator) activity;
+        fc.addToCart(product);
     }
 }

@@ -54,21 +54,21 @@ public class ProductsAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        View view = convertView;
-        if (convertView == null)
-            view = inflater.inflate(R.layout.listview_row, null);
-
         Product product = products.get(position);
+        View view = convertView;
+        if (convertView == null) {
+            view = inflater.inflate(R.layout.product_view, null);
+        }
 
         TextView text = (TextView) view.findViewById(R.id.name);
         TextView price = (TextView) view.findViewById(R.id.price);
         ImageView image = (ImageView) view.findViewById(R.id.image);
         ImageView addToCart = (ImageView) view.findViewById(R.id.add_to_cart);
 
-        text.setText(product.getName(C.LANGUAGE));
+        text.setText(product.getName(C.LANG));
         price.setText(product.getPrice());
         imageLoader.DisplayImage(C.BASEURL + C.IMGPATH + product.getImageName(), image);
-        addToCart.setOnClickListener(new AddToCartOnClickListener(activity.getApplicationContext(), product));
+        addToCart.setOnClickListener(new AddToCartOnClickListener(activity, product));
 
         return view;
     }

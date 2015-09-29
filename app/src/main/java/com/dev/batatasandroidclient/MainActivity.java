@@ -1,124 +1,62 @@
 package com.dev.batatasandroidclient;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
+import com.dev.batatasandroidclient.adapters.ViewPagerAdapter;
 import com.dev.batatasandroidclient.constants.C;
 import com.dev.batatasandroidclient.data.Product;
-import com.dev.batatasandroidclient.listeners.ProductOnClickListener;
-import com.dev.batatasandroidclient.adapters.ProductsAdapter;
-import com.dev.batatasandroidclient.view.LanguageChooser;
-import com.dev.batatasandroidclient.view.SplashScreen;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.dev.batatasandroidclient.view.CartFragment;
+import com.dev.batatasandroidclient.view.MainFragment;
 
 /**
  * @author Nguyen Viet Bach
  *         Created by dev on 27.9.2015.
  */
 
-public class MainActivity extends Activity {
-    private ListView mainList;
-    private ProductsAdapter adapter;
-    private RequestQueue queue;
-    private String savedResponse;
-    private SharedPreferences sp;
+public class MainActivity extends FragmentActivity implements FragmentCommunicator {
     private Menu theMenu;
+
+    private ViewPager viewPager;
+    private ViewPagerAdapter viewPagerAdapter;
+    private MainFragment mainFragment;
+    private CartFragment cartFragment;
+
+    //private SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mainList = (ListView) findViewById(R.id.mainListView);
-        queue = Volley.newRequestQueue(this);
+        C.LANG = getResources().getString(R.string.language);
+        //sp = getSharedPreferences("preferences", Context.MODE_PRIVATE);
 
-        sp = getSharedPreferences("config", Context.MODE_PRIVATE);
+        //setPreferredLanguage();
 
-        if (sp.getString("language", "") == "") {
-            chooseLanguage();
-        } else {
-            C.LANGUAGE = sp.getString("language", "");
-        }
+        viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPagerAdapter = new ViewPagerAdapter(MainActivity.this, getSupportFragmentManager());
+        viewPager.setAdapter(viewPagerAdapter);
 
-        splash();
-
-        init();
+        mainFragment = viewPagerAdapter.getMainFragment();
+        cartFragment = viewPagerAdapter.getCartFragment();
     }
 
-    private void chooseLanguage() {
-        Intent languageChooserIntent = new Intent(MainActivity.this, LanguageChooser.class);
-        startActivityForResult(languageChooserIntent, C.LANGUAGECHOOSER_ACTIVITY_CODE);
-    }
-
-    private void splash() {
-        Intent splashIntent = new Intent(MainActivity.this, SplashScreen.class);
-        startActivityForResult(splashIntent, C.SPLASH_ACTIVITY_CODE);
-    }
-
-    private void init() {
-        String url = C.BASEURL + C.FOODPATH;
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        savedResponse = response;
-                        populateListView(response);
-                        finishActivity(C.SPLASH_ACTIVITY_CODE);
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(C.TAG, error.getMessage());
-            }
-        });
-        queue.add(stringRequest);
-    }
-
-    private void populateListView(String response) {
-        List<Product> products = getProducts(response);
-        adapter = new ProductsAdapter(this, products);
-        mainList.setAdapter(adapter);
-        mainList.setOnItemClickListener(new ProductOnClickListener(MainActivity.this));
-    }
-
-    private List<Product> getProducts(String response) {
-        List<Product> products = new ArrayList<>();
-        try {
-            JSONArray productsArray = new JSONObject(response).getJSONArray("products");
-            for (int i = 0; i < productsArray.length(); i++) {
-                JSONObject p = productsArray.getJSONObject(i);
-                Product product = new Product(p);
-                products.add(product);
-            }
-        } catch (Exception e) {
-            Log.i(C.TAG, e.getMessage());
-        }
-        return products;
-    }
+    /*private void setPreferredLanguage() {
+        C.LANG = getResources().getConfiguration().locale.getLanguage();
+        C.LANG = sp.getString("language", C.LANG);
+        sp.edit().putString("language", C.LANG).apply();
+    }*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         menu.clear();
         theMenu = menu;
-        if (C.LANGUAGE == "cs") {
+        if (C.LANG.equals("cs")) {
             getMenuInflater().inflate(R.menu.menu_main_cs, menu);
         } else {
             getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -131,37 +69,39 @@ public class MainActivity extends Activity {
         int id = item.getItemId();
         switch (id) {
             case R.id.reload:
-                adapter.getImageLoader().clearCache();
-                init();
+                mainFragment.evacuate();
+                mainFragment.clearCache();
+                mainFragment.init();
                 return true;
-            case R.id.reset_settings:
-                getSharedPreferences("config", 0).edit().clear().commit();
+            case R.id.restart_app:
+                //mainFragment.resetSettings();
+                //mainFragment.clearCache();
                 Intent intent = getIntent();
                 finish();
                 startActivity(intent);
                 return true;
             case R.id.change_language:
-                if (C.LANGUAGE == "cs") {
-                    C.LANGUAGE = "en";
-                    sp.edit().putString("language", "en").commit();
-                    onCreateOptionsMenu(theMenu);
-                } else {
-                    C.LANGUAGE = "cs";
-                    sp.edit().putString("language", "cs").commit();
-                    onCreateOptionsMenu(theMenu);
-                }
-                populateListView(savedResponse);
+                mainFragment.changeLanguage();
+                onCreateOptionsMenu(theMenu);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
-
     }
 
     @Override
     public void onDestroy() {
-        mainList.setAdapter(null);
         super.onDestroy();
+    }
+
+    @Override
+    public void reconnect() {
+        mainFragment.init();
+    }
+
+    @Override
+    public void addToCart(Product product) {
+        cartFragment.addToCart(product);
     }
 }
 

@@ -6,32 +6,42 @@ package com.dev.batatasandroidclient.constants;
  *         Contains CONSTANTS
  */
 public final class C {
-    public static String LANGUAGE = "en";
+    public static String LANG = "en";
+
+    public static final String BASEURL = "https://www.batatas.cz";
+    public static final String IMGPATH = "/images/products/";
+    public static final String FOODPATH = "/api/api/products/search/food/";
+    public static final String PLACESPATH = "/api/api/places/";
+
     public static final int SPLASH_ACTIVITY_CODE = 12;
-    public static final int LANGUAGECHOOSER_ACTIVITY_CODE = 21;
+
+    public static final String CURRENCY = "Kč";
+    public static final String TAG = "NVB";
+
+    public static String getLabelNoAllergens(String lang) {
+        switch (lang) {
+            case "cs":
+                return "žádné";
+            default:
+                return "none";
+        }
+    }
 
     public static final String getLabelAllergens(String lang) {
-        switch(lang) {
+        switch (lang) {
             case "cs":
-                return "Alergen č. ";
+                return "Alergeny: ";
             default:
-                return "Allergen # ";
+                return "Allergens: ";
         }
     }
 
     public static final String getLabelAddedToCart(String lang) {
-        switch(lang) {
+        switch (lang) {
             case "cs":
                 return " přidáno do košíku";
             default:
                 return " added to cart";
         }
     }
-
-    public static final String CURRENCY = "Kč";
-    public static final String TAG = "NVB";
-    public static final String BASEURL = "https://www.batatas.cz";
-    public static final String IMGPATH = "/images/products/";
-    public static final String FOODPATH = "/api/api/products/search/food/";
-    public static final String PLACESPATH = "/api/api/places/";
 }

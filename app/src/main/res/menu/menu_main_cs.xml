@@ -1,16 +1,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
-    <!--item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" android:showAsAction="never" /-->
 
-    <item android:id="@+id/reload" android:title="@string/reload_cs"
-        android:orderInCategory="100" android:showAsAction="never" />
+    <item
+        android:id="@+id/reload"
+        android:icon="@drawable/reload"
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/reload" />
 
-    <item android:id="@+id/reset_settings" android:title="@string/reset_settings_cs"
-        android:orderInCategory="100" android:showAsAction="never" />
-
-    <item android:id="@+id/change_language"
+    <item
+        android:id="@+id/change_language"
         android:icon="@drawable/english_flag"
-        android:title="@string/english"
-        android:showAsAction="ifRoom" />
+        android:orderInCategory="100"
+        android:showAsAction="ifRoom"
+        android:title="@string/english_language_desc" />
+
+    <item android:id="@+id/restart_app" android:title="@string/restart_app"
+        android:orderInCategory="100" android:showAsAction="never" />
+
 </menu>

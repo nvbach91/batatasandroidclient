@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="210dp"
         android:id="@+id/image"
-        android:contentDescription="@string/image_view_desc"
+        android:contentDescription="@string/product_image_desc"
         android:layout_marginBottom="10dp"
         android:scaleType="centerCrop" />
 
@@ -40,7 +40,7 @@
         android:layout_width="65dp"
         android:layout_height="65dp"
         android:id="@+id/add_to_cart"
-        android:contentDescription="@string/image_view_desc"
+        android:contentDescription="@string/cart"
         android:src="@drawable/cart"
         android:background="#7f000000"
         android:layout_alignTop="@+id/price"

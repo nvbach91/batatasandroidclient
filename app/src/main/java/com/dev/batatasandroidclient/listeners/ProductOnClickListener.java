@@ -22,7 +22,7 @@ import java.io.File;
  *         Created by dev on 27.9.2015.
  */
 public class ProductOnClickListener implements AdapterView.OnItemClickListener {
-    private Context context;
+    private final Context context;
 
     public ProductOnClickListener(Context context) {
         this.context = context;
@@ -46,8 +46,8 @@ public class ProductOnClickListener implements AdapterView.OnItemClickListener {
         Bitmap bitmap = Utils.decodeFile(f);
         image.setImageBitmap(bitmap);
 
-        name.setText(product.getName(C.LANGUAGE));
-        description.setText(product.getDescription(C.LANGUAGE));
+        name.setText(product.getName(C.LANG));
+        description.setText(product.getDescription(C.LANG));
         allergens.setText(product.getAllergens());
         price.setText(product.getPrice());
 

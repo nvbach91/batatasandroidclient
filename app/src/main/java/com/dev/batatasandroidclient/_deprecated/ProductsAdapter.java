@@ -19,20 +19,20 @@ import java.util.List;
  */
 public class ProductsAdapter extends ArrayAdapter<Product> {
     public ProductsAdapter(Context context, List<Product> products) {
-        super(context, R.layout.listview_row, products);
+        super(context, R.layout.product_view, products);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-        View customView = layoutInflater.inflate(R.layout.listview_row, parent, false);
+        View customView = layoutInflater.inflate(R.layout.product_view, parent, false);
 
         Product product = getItem(position);
         TextView name = (TextView) customView.findViewById(R.id.name);
         TextView price = (TextView) customView.findViewById(R.id.price);
         ImageView image = (ImageView) customView.findViewById(R.id.image);
 
-        name.setText(product.getName(C.LANGUAGE));
+        name.setText(product.getName(C.LANG));
         price.setText(product.getPrice());
         //image.setImageBitmap(product.getImageBitmap());
         return customView;

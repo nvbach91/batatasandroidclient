@@ -1,5 +1,8 @@
 package com.dev.batatasandroidclient.data;
 
+import android.content.Context;
+
+import com.dev.batatasandroidclient.R;
 import com.dev.batatasandroidclient.constants.C;
 
 import org.json.JSONException;
@@ -10,6 +13,8 @@ import org.json.JSONObject;
  *         Created by dev on 27.9.2015.
  */
 public class Product {
+
+    private final Context context;
 
     private final Integer id;
     private final Integer type;
@@ -32,7 +37,8 @@ public class Product {
     private final Integer disable;
     private final String validFrom;
 
-    public Product(JSONObject product) throws JSONException {
+    public Product(Context context, JSONObject product) throws JSONException {
+        this.context = context;
         this.id = product.getInt("id");
         this.type = product.getInt("type");
 
@@ -71,7 +77,7 @@ public class Product {
 
 
     public String getAllergens() {
-        return C.getLabelAllergens(C.LANGUAGE) + (allergens == "null" ? "none" : allergens.replaceAll(",", ", "));
+        return C.getLabelAllergens(C.LANG) + (allergens.equals("null") ? C.getLabelNoAllergens(C.LANG) : allergens.replaceAll(",", ", "));
     }
 
     public Integer getId() {

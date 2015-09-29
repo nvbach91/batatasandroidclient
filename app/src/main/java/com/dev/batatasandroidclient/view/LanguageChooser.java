@@ -46,8 +46,8 @@ public class LanguageChooser extends Activity {
         SharedPreferences sp = getSharedPreferences("config", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("language", lang);
-        C.LANGUAGE = lang;
-        editor.commit();
+        C.LANG = lang;
+        editor.apply();
     }
 
     @Override

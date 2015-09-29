@@ -37,7 +37,7 @@ public class DetailsDialog extends Dialog {
         getWindow().getAttributes().windowAnimations = R.style.DetailsDialogAnimation;
 
         addToCart = (ImageView) this.findViewById(R.id.add_to_cart);
-        addToCart.setOnClickListener(new AddToCartOnClickListener(getContext(), product));
+        addToCart.setOnClickListener(new AddToCartOnClickListener(getOwnerActivity(), product));
 
         allergens = (TextView) this.findViewById(R.id.allergens);
         allergens.setOnClickListener(new AllergensOnClickListener(getContext()));

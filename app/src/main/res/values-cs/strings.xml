@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">Batatas</string>
+    <string name="batatas_url">www.batatas.cz</string>
+
+    <string name="choose_language_label">Prosím zvolte jazyk</string>
+
+    <string name="company_logo_desc">Logo společnosti</string>
+    <string name="product_image_desc">Obrázek produktu</string>
+
+    <string name="czech_language_desc">Čeština</string>
+    <string name="english_language_desc">Angličtina</string>
+
+    <string name="restart_app">Restartovat aplikaci</string>
+
+    <string name="reload">Znovu načíst</string>
+
+    <string name="cart">Košík</string>
+    <string name="shop">Shop</string>
+    <string name="connection_error">Chyba připojení</string>
+    <string name="none">žádné</string>
+    <string name="language">cs</string>
+    <string name="reconnect">Znovu načíst</string>
+    <string name="check_connection">Prosím zkontrolujte internetové\npřipojení a poté znovu načtěte</string>
+</resources>
