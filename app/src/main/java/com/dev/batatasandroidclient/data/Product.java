@@ -37,6 +37,8 @@ public class Product {
     private final Integer disable;
     private final String validFrom;
 
+    private Integer count;
+
     public Product(Context context, JSONObject product) throws JSONException {
         this.context = context;
         this.id = product.getInt("id");
@@ -60,14 +62,15 @@ public class Product {
         this.number = product.getString("number").trim();
         this.disable = product.getInt("disable");
         this.validFrom = product.getString("validfrom").trim();
+
+        this.count = 1;
     }
 
-    public String print() {
-        return "{\"name_en\": \"" + name_en + "\", "
-                + "\"price\": " + price + "}";
+    public Integer getPrice() {
+        return price;
     }
 
-    public String getPrice() {
+    public String getPriceString() {
         return price + " " + C.CURRENCY;
     }
 
@@ -116,8 +119,6 @@ public class Product {
         switch (lang) {
             case "cs":
                 return name_cz;
-            case "en":
-                return name_en;
             default:
                 return name_en;
         }
@@ -127,10 +128,32 @@ public class Product {
         switch (lang) {
             case "cs":
                 return description_cz;
-            case "en":
-                return description_en;
             default:
                 return description_en;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Product product = (Product) o;
+
+        return !(id != null ? !id.equals(product.id) : product.id != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
+
+    public String getCount() {
+        return count.toString();
+    }
+
+    public void addCount() {
+        count++;
     }
 }

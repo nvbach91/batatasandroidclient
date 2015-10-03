@@ -6,8 +6,10 @@ import android.widget.AdapterView;
 
 import com.dev.batatasandroidclient.FragmentCommunicator;
 
+
 /**
- * Created by dev on 29.9.2015.
+ * @author Nguyen Viet Bach
+ *         Created by dev on 25.9.2015.
  */
 public class ReconnectOnClickListener implements AdapterView.OnClickListener {
     private final Activity activity;

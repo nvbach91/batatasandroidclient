@@ -1,6 +1,6 @@
 package com.dev.batatasandroidclient.listeners;
 
-import android.content.Context;
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.view.View;
 import android.view.Window;
@@ -22,16 +22,16 @@ import java.io.File;
  *         Created by dev on 27.9.2015.
  */
 public class ProductOnClickListener implements AdapterView.OnItemClickListener {
-    private final Context context;
+    private final Activity activity;
 
-    public ProductOnClickListener(Context context) {
-        this.context = context;
+    public ProductOnClickListener(Activity activity) {
+        this.activity = activity;
     }
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Product product = (Product) parent.getItemAtPosition(position);
-        DetailsDialog dialog = new DetailsDialog(context, product);
+        DetailsDialog dialog = new DetailsDialog(activity, product);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.dialog_details);
 
@@ -41,7 +41,7 @@ public class ProductOnClickListener implements AdapterView.OnItemClickListener {
         TextView allergens = (TextView) dialog.findViewById(R.id.allergens);
         TextView price = (TextView) dialog.findViewById(R.id.price);
 
-        FileCache fileCache = new FileCache(context);
+        FileCache fileCache = new FileCache(activity);
         File f = fileCache.getFile(C.BASEURL + C.IMGPATH + product.getImageName());
         Bitmap bitmap = Utils.decodeFile(f);
         image.setImageBitmap(bitmap);
@@ -49,7 +49,7 @@ public class ProductOnClickListener implements AdapterView.OnItemClickListener {
         name.setText(product.getName(C.LANG));
         description.setText(product.getDescription(C.LANG));
         allergens.setText(product.getAllergens());
-        price.setText(product.getPrice());
+        price.setText(product.getPriceString());
 
         dialog.show();
     }

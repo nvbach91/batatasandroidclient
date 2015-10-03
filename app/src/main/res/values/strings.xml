@@ -7,12 +7,15 @@
     <string name="company_logo_desc">Company Logo</string>
     <string name="product_image_desc">Product Image</string>
 
-    <string name="czech_language_desc">Czech Language</string>
-    <string name="english_language_desc">English Language</string>
+    <string name="czech_language_desc">Czech</string>
+    <string name="english_language_desc">English</string>
+
+    <string name="languages">Languages</string>
 
     <string name="restart_app">Restart App</string>
 
     <string name="reload">Reload</string>
+    <string name="loading">Loading</string>
 
     <string name="cart">Cart</string>
     <string name="shop">Shop</string>
@@ -21,4 +24,11 @@
     <string name="language">en</string>
     <string name="reconnect">Reconnect</string>
     <string name="check_connection">Please check your internet\nconection, then reload</string>
+    <string name="change_language_message">Change phone locale to fully switch app language</string>
+    <string name="food">Food name</string>
+    <string name="quantity">Qt.</string>
+    <string name="price">Price</string>
+    <string name="total">Total:</string>
+    <string name="plus">Plus</string>
+    <string name="minus">Minus</string>
 </resources>

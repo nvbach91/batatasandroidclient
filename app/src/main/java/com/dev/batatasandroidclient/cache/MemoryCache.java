@@ -1,9 +1,5 @@
 package com.dev.batatasandroidclient.cache;
 
-/**
- * Created by dev on 25.9.2015.
- */
-
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
@@ -13,6 +9,10 @@ import java.util.Map.Entry;
 import android.graphics.Bitmap;
 import android.util.Log;
 
+/**
+ * @author Nguyen Viet Bach
+ * Created by dev on 25.9.2015.
+ */
 public class MemoryCache {
 
     private static final String TAG = "MemoryCache";

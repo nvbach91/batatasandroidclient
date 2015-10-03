@@ -1,5 +1,6 @@
 package com.dev.batatasandroidclient.view;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
@@ -21,12 +22,11 @@ import com.dev.batatasandroidclient.listeners.AllergensOnClickListener;
 public class DetailsDialog extends Dialog {
 
     private final Product product;
+    private final Activity activity;
 
-    private ImageView addToCart;
-    private TextView allergens;
-
-    public DetailsDialog(Context context, Product product) {
-        super(context);
+    public DetailsDialog(Activity activity, Product product) {
+        super(activity);
+        this.activity = activity;
         this.product = product;
     }
 
@@ -36,10 +36,10 @@ public class DetailsDialog extends Dialog {
         getWindow().setDimAmount(0.7f);
         getWindow().getAttributes().windowAnimations = R.style.DetailsDialogAnimation;
 
-        addToCart = (ImageView) this.findViewById(R.id.add_to_cart);
-        addToCart.setOnClickListener(new AddToCartOnClickListener(getOwnerActivity(), product));
+        ImageView addToCart = (ImageView) this.findViewById(R.id.add_to_cart);
+        addToCart.setOnClickListener(new AddToCartOnClickListener(activity, product));
 
-        allergens = (TextView) this.findViewById(R.id.allergens);
+        TextView allergens = (TextView) this.findViewById(R.id.allergens);
         allergens.setOnClickListener(new AllergensOnClickListener(getContext()));
     }
 

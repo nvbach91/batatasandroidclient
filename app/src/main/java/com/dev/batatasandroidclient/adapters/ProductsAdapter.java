@@ -1,10 +1,5 @@
 package com.dev.batatasandroidclient.adapters;
 
-/**
- * @author Nguyen Viet Bach
- * Created by dev on 26.9.2015.
- */
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -22,19 +17,20 @@ import com.dev.batatasandroidclient.net.ImageLoader;
 
 import java.util.List;
 
-
+/**
+ * @author Nguyen Viet Bach
+ *         Created by dev on 26.9.2015.
+ */
 public class ProductsAdapter extends BaseAdapter {
 
     private final Activity activity;
     private final List<Product> products;
-    private static LayoutInflater inflater = null;
-    public final ImageLoader imageLoader;
+    private final ImageLoader imageLoader;
 
     public ProductsAdapter(Activity a, List<Product> p) {
         activity = a;
         products = p;
-        inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        imageLoader = new ImageLoader(activity.getApplicationContext());
+        imageLoader = new ImageLoader(activity);
     }
 
     @Override
@@ -57,6 +53,7 @@ public class ProductsAdapter extends BaseAdapter {
         Product product = products.get(position);
         View view = convertView;
         if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view = inflater.inflate(R.layout.product_view, null);
         }
 
@@ -66,7 +63,7 @@ public class ProductsAdapter extends BaseAdapter {
         ImageView addToCart = (ImageView) view.findViewById(R.id.add_to_cart);
 
         text.setText(product.getName(C.LANG));
-        price.setText(product.getPrice());
+        price.setText(product.getPriceString());
         imageLoader.DisplayImage(C.BASEURL + C.IMGPATH + product.getImageName(), image);
         addToCart.setOnClickListener(new AddToCartOnClickListener(activity, product));
 

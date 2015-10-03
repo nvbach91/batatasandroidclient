@@ -1,9 +1,5 @@
 package com.dev.batatasandroidclient.util;
 
-/**
- * Created by dev on 25.9.2015.
- */
-
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
@@ -13,6 +9,10 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+/**
+ * @author Nguyen Viet Bach
+ *         Created by dev on 25.9.2015.
+ */
 public class Utils {
     public static void CopyStream(InputStream is, OutputStream os) {
         final int buffer_size = 1024;
@@ -27,6 +27,7 @@ public class Utils {
         } catch (Exception ex) {
         }
     }
+
     public static Bitmap decodeFile(File f) {
         try {
             //decode image size

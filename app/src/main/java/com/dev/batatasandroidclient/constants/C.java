@@ -3,7 +3,7 @@ package com.dev.batatasandroidclient.constants;
 /**
  * @author Nguyen Viet Bach
  *         Created by dev on 25.9.2015.
- *         Contains CONSTANTS
+ *         Contains CONSTANTS, GLOBAL VARIABLES
  */
 public final class C {
     public static String LANG = "en";
@@ -27,7 +27,7 @@ public final class C {
         }
     }
 
-    public static final String getLabelAllergens(String lang) {
+    public static String getLabelAllergens(String lang) {
         switch (lang) {
             case "cs":
                 return "Alergeny: ";
@@ -36,10 +36,10 @@ public final class C {
         }
     }
 
-    public static final String getLabelAddedToCart(String lang) {
+    public static String getLabelAddedToCart(String lang) {
         switch (lang) {
             case "cs":
-                return " přidáno do košíku";
+                return " vloženo do košíku";
             default:
                 return " added to cart";
         }

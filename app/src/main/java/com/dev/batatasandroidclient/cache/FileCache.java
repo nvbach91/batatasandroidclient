@@ -1,13 +1,13 @@
 package com.dev.batatasandroidclient.cache;
 
-/**
- * Created by dev on 25.9.2015.
- */
-
 import java.io.File;
 
 import android.content.Context;
 
+/**
+ * @author Nguyen Viet Bach
+ *         Created by dev on 25.9.2015.
+ */
 public class FileCache {
 
     private File cacheDir;

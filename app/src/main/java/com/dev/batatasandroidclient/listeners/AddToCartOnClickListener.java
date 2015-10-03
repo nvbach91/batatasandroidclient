@@ -26,8 +26,10 @@ public class AddToCartOnClickListener implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Toaster.show(activity, product.getName(C.LANG) + C.getLabelAddedToCart(C.LANG));
         FragmentCommunicator fc = (FragmentCommunicator) activity;
         fc.addToCart(product);
+        Toaster.show(activity, '"' + product.getName(C.LANG) + '"'
+                + C.getLabelAddedToCart(C.LANG)
+                + " (" + product.getCount() + ")");
     }
 }

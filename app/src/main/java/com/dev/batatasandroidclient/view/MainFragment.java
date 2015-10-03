@@ -18,6 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.dev.batatasandroidclient.FragmentCommunicator;
 import com.dev.batatasandroidclient.R;
 import com.dev.batatasandroidclient.adapters.ProductsAdapter;
 import com.dev.batatasandroidclient.adapters.NoConnectionAdapter;
@@ -32,42 +33,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by dev on 28.9.2015.
+ * @author Nguyen Viet Bach
+ *         Created by dev on 25.9.2015.
  */
 public class MainFragment extends Fragment {
 
     private ListView mainList;
     private RequestQueue queue;
-    //private SharedPreferences sp;
-    private ProductsAdapter adapter;
-    private String savedResponse;
+    private ProductsAdapter productsAdapter;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View mainView = inflater.inflate(R.layout.fragment_main, container, false);
-        mainList = (ListView) mainView.findViewById(R.id.mainListView);
+        mainList = (ListView) mainView.findViewById(R.id.main_list_view);
         queue = Volley.newRequestQueue(getActivity());
-        //sp = getActivity().getSharedPreferences("preferences", Context.MODE_PRIVATE);
-
-        /*if (sp.getString("language", "").equals("")) {
-            chooseLanguage();
-        } else {
-            C.LANG = sp.getString("language", "");
-        }*/
 
         splash();
 
         init();
 
-
         return mainView;
     }
-
-    /*private void chooseLanguage() {
-        Intent languageChooserIntent = new Intent(getActivity(), LanguageChooser.class);
-        getActivity().startActivityForResult(languageChooserIntent, C.LANGUAGECHOOSER_ACTIVITY_CODE);
-    }*/
 
     private void splash() {
         Intent splashIntent = new Intent(getActivity(), SplashScreen.class);
@@ -80,27 +67,31 @@ public class MainFragment extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        savedResponse = response;
                         populateListView(response);
                         new Handler().postDelayed(new Runnable() {
                             @Override
                             public void run() {
                                 getActivity().finishActivity(C.SPLASH_ACTIVITY_CODE);
+                                FragmentCommunicator fc = (FragmentCommunicator) getActivity();
+                                fc.clearAnim();
+                                fc.setMenuItemsEnabled(true);
                             }
-                        }, 3000);
+                        }, 2000);
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                savedResponse = "";
                 Toaster.show(getActivity(), getResources().getString(R.string.connection_error, Toast.LENGTH_LONG));
                 mainList.setAdapter(new NoConnectionAdapter(getActivity()));
                 new Handler().postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         getActivity().finishActivity(C.SPLASH_ACTIVITY_CODE);
+                        FragmentCommunicator fc = (FragmentCommunicator) getActivity();
+                        fc.clearAnim();
+                        fc.setMenuItemsEnabled(false);
                     }
-                }, 3000);
+                }, 2000);
             }
         });
         queue.add(stringRequest);
@@ -108,8 +99,8 @@ public class MainFragment extends Fragment {
 
     public void populateListView(String response) {
         List<Product> products = parseProducts(response);
-        adapter = new ProductsAdapter(getActivity(), products);
-        mainList.setAdapter(adapter);
+        productsAdapter = new ProductsAdapter(getActivity(), products);
+        mainList.setAdapter(productsAdapter);
         mainList.setOnItemClickListener(new ProductOnClickListener(getActivity()));
     }
 
@@ -135,25 +126,11 @@ public class MainFragment extends Fragment {
     }
 
     public void clearCache() {
-        if (adapter != null)
-            adapter.getImageLoader().clearCache();
+        if (productsAdapter != null)
+            productsAdapter.getImageLoader().clearCache();
     }
 
-    /*public void resetSettings() {
-        sp.edit().clear().apply();
-    }*/
-
-    public void repopulateListView() {
-        if (!savedResponse.isEmpty())
-            populateListView(savedResponse);
-    }
-
-    public void changeLanguage() {
-        if (C.LANG.equals("cs")) {
-            C.LANG = "en";
-        } else {
-            C.LANG = "cs";
-        }
-        repopulateListView();
+    public void notifyAdapter() {
+        productsAdapter.notifyDataSetChanged();
     }
 }

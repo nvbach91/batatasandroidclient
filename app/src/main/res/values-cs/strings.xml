@@ -21,4 +21,13 @@
     <string name="language">cs</string>
     <string name="reconnect">Znovu načíst</string>
     <string name="check_connection">Prosím zkontrolujte internetové\npřipojení a poté znovu načtěte</string>
+    <string name="languages">Jazyky</string>
+    <string name="change_language_message"></string>
+    <string name="loading">Načítá se</string>
+    <string name="food">Název jídla</string>
+    <string name="price">Cena</string>
+    <string name="quantity">Počet</string>
+    <string name="total">Celkem:</string>
+    <string name="minus">Minus</string>
+    <string name="plus">Plus</string>
 </resources>

@@ -11,11 +11,13 @@ import com.dev.batatasandroidclient.R;
 import com.dev.batatasandroidclient.constants.C;
 
 /**
- * Created by dev on 27.9.2015.
+ * @author Nguyen Viet Bach
+ *         Created by dev on 25.9.2015.
  */
 public class LanguageChooser extends Activity {
     private ImageView czech;
     private ImageView english;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +44,7 @@ public class LanguageChooser extends Activity {
         });
     }
 
-    private void setPreferredLanguage(String lang){
+    private void setPreferredLanguage(String lang) {
         SharedPreferences sp = getSharedPreferences("config", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("language", lang);

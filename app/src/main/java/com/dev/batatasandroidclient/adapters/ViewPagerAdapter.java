@@ -1,9 +1,13 @@
 package com.dev.batatasandroidclient.adapters;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.style.ImageSpan;
 
 import com.dev.batatasandroidclient.R;
 import com.dev.batatasandroidclient.constants.C;
@@ -11,7 +15,8 @@ import com.dev.batatasandroidclient.view.CartFragment;
 import com.dev.batatasandroidclient.view.MainFragment;
 
 /**
- * Created by dev on 28.9.2015.
+ * @author Nguyen Viet Bach
+ *         Created by dev on 28.9.2015.
  */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 

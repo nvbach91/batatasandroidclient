@@ -3,9 +3,15 @@ package com.dev.batatasandroidclient;
 import com.dev.batatasandroidclient.data.Product;
 
 /**
- * Created by dev on 29.9.2015.
+ * @author Nguyen Viet Bach
+ *         Created by dev on 25.9.2015.
  */
 public interface FragmentCommunicator {
     void reconnect();
+
     void addToCart(Product product);
+
+    void clearAnim();
+
+    void setMenuItemsEnabled(boolean state);
 }

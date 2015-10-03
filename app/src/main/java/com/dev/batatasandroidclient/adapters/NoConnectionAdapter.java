@@ -12,7 +12,8 @@ import com.dev.batatasandroidclient.R;
 import com.dev.batatasandroidclient.listeners.ReconnectOnClickListener;
 
 /**
- * Created by dev on 29.9.2015.
+ * @author Nguyen Viet Bach
+ *         Created by dev on 25.9.2015.
  */
 public class NoConnectionAdapter extends BaseAdapter {
     private static LayoutInflater inflater = null;
